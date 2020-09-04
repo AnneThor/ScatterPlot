@@ -26,7 +26,7 @@
           const w = 850;
           const h = 500;
           const padding = 50;
-          var margin = {top: 100, right: 20, bottom: 30, left: 60 };
+          var margin = {top: 100, right: 20, bottom: 30, left: 100 };
 
           var xMin = d3.min(dataset, d => d["Year"]);
           var xMax = d3.max(dataset, d => d["Year"]);
@@ -47,7 +47,7 @@
           yMin.setSeconds( yMin.getSeconds() - 5);
           var yMax = d3.max(timeSpread, d=> d);
           yMax.setSeconds( yMax.getSeconds() + 5);
-          console.log(yMin, yMax);
+
           const yScale = d3.scaleLinear()
             .domain([yMax, yMin])
             .range([h-padding, padding]);
@@ -78,10 +78,6 @@
             .style("font-size", "16px")
             .text("35 Fastest times up Alpe d'Huez");
 
-          svg.append("h4")
-            .text("35 Fastest times up Alpe d'Huez");
-
-
           var color = d3.scaleOrdinal(d3.schemePastel1);
 
           var legendContainer = svg.append("g")
@@ -92,26 +88,23 @@
             .enter().append("g")
             .attr("class", "legend-label")
             .attr("transform", function(d,i) {
-              return "translate(0," + height/2 -i*20 + ")";
+              return "translate(0," + height/2 -i*20 + ")"
+            })
 
-              legend.append("rect")
-                .attr("x", width-18)
-                .attr("width", 18)
-                .attr("height", 18)
-                .style("fill", color);
+            legend.append("rect")
+              .attr("x", w-18)
+              .attr("width", 18)
+              .attr("height", 18)
+              .style("fill", color);
 
-              legend.append("text")
-                .attr("x", width-24)
-                .attr("y", 9)
-                .attr("dy", ".35em")
-                .style("text-anchor", "end")
-                .text(d => {
-                  return d ? "Riders with doping allegations" : "No doping allegations"
-                })
-              });
-
-          svg.append("h2")
-            .text("Doping in Professional Cycling");
+            legend.append("text")
+              .attr("x", w-24)
+              .attr("y", 9)
+              .attr("dy", ".35em")
+              .style("text-anchor", "end")
+              .text(d => {
+                return d ? "Riders with doping allegations" : "No doping allegations"
+            });
 
           svg.selectAll("circle")
             .data(dataset)
@@ -170,8 +163,8 @@
 
           svg.append("text")
             .attr("transform", "rotate(-90)")
-            .attr("x", -160)
-            .attr("y", -44)
+            .attr("x", -w/3)
+            .attr("y", 15)
             .attr("class", "y-title")
             .text("Time in Minutes");
 

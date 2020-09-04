@@ -45,6 +45,10 @@ svg {
   margin: auto;
 }
 
+#y-axis {
+  font-size: .5rem;
+}
+
 .y-title {
   color: black;
   font-size: 1.2rem;
