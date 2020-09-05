@@ -34,16 +34,18 @@
             .domain([xMin-1, xMax+1])
             .range([padding, w-padding]);
 
-          var timeSpread = dataset.map( d => {
-            var minutes = parseInt(d["Time"].slice(0,2));
-            var seconds = parseInt(d["Time"].slice(3));
-            var dateObj = new Date();
-            dateObj.setMinutes(minutes);
-            dateObj.setSeconds(seconds);
-            return dateObj;
-          });
+          dataset.forEach( d => {
+            let time = d["Time"].split(":");
+            let dateObj = new Date();
+            dateObj.setMinutes(time[0]);
+            dateObj.setSeconds(time[1]);
+            d["Time"] = dateObj;
+          })
 
-          console.log(timeSpread);
+          var timeSpread = dataset.map(d=> d["Time"]);
+
+          console.log("data", dataset);
+          console.log("timespread", timeSpread);
 
           var yMin = d3.min(timeSpread, d => d);
           yMin.setSeconds( yMin.getSeconds() - 5);
@@ -88,14 +90,7 @@
             .attr("data-xvalue", d => d["Year"])
             .attr("data-yvalue", (d,i) =>  d["Time"])
             .attr("cx", d => xScale(d["Year"]) )
-            .attr("cy", d => {
-              var minutes = parseInt(d["Time"].slice(0,2));
-              var seconds = parseInt(d["Time"].slice(3));
-              var dateObj = new Date();
-              dateObj.setMinutes(minutes);
-              dateObj.setSeconds(seconds);
-              return yScale(dateObj);
-            })
+            .attr("cy", d => yScale(d["Time"]) )
             .attr("r", 8)
             .style("fill", function(d){
               if (d["Doping"] !== "") {
@@ -176,7 +171,10 @@
         }
       });
 
-
   </script>
+
+  <footer id="footer">
+    <p>Coded and Designed by Anne Thorsteinson 2020</p>
+  </footer>
 </body>
 </html>
