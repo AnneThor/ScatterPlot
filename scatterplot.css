@@ -35,10 +35,9 @@ p {
 }
 
 #legend {
-  width: 120px;
-  height: 40px;
-  padding: 2px;
-  background: lightgrey;
+  background: lightsteelblue;
+  height: auto;
+  width: auto;
 }
 
 svg {
